@@ -17,8 +17,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->ui->listView->setModel(model);
     this->ui->listView_2->setModel(model2);
-    this->ui->lineEdit->setText(QDir::currentPath());
+    this->ui->lineEdit->setText(rootHome);
+    this->ui->lineEdit_2->setText(rootHome_2);
 }
+
 
 MainWindow::~MainWindow()
 {
