@@ -27,14 +27,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="usb1Button_1">
           <property name="text">
            <string>USB1</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="usb2Button_1">
           <property name="maximumSize">
            <size>
             <width>75</width>
@@ -68,7 +68,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="usb1Button_2">
           <property name="maximumSize">
            <size>
             <width>75</width>
@@ -81,7 +81,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_6">
+         <widget class="QPushButton" name="usb2Button_2">
           <property name="maximumSize">
            <size>
             <width>75</width>

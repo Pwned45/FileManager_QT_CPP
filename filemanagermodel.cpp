@@ -24,6 +24,16 @@ void FileManagerModel::getFolderList(QString folderPath, QFileInfoList *dirList)
     this->endResetModel();
 }
 
+QString FileManagerModel::getRootPath()
+{
+    return this->rootPath;
+}
+
+void FileManagerModel::setRootPath(QString rootPath)
+{
+    this->rootPath = rootPath;
+}
+
 int FileManagerModel::rowCount(const QModelIndex &) const
 {
     return this->aDirList->count();

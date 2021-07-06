@@ -12,6 +12,8 @@ public:
     int rowCount(const QModelIndex &) const;
     QVariant data(const QModelIndex &index, int role) const;
     void getFolderList(QString folderPath, QFileInfoList *dirList);
+    QString getRootPath();
+    void setRootPath(QString rootPath);
 
 private:
     QFileInfoList *aDirList;
