@@ -12,16 +12,20 @@ void FileManagerModel::getFolderList(QString folderPath, QFileInfoList *dirList)
     QDir dir = QDir(folderPath);
 
 
-    if (folderPath <= rootPath) //some root path
+    if (folderPath == rootPath) //some root path
     {
         *dirList = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
+        this->beginResetModel();
+        this->aDirList = dirList;
+        this->endResetModel();
     } else{
+        if (folderPath > rootPath) {
         *dirList = dir.entryInfoList(QDir::NoDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
+        this->beginResetModel();
+        this->aDirList = dirList;
+        this->endResetModel();
+        }
     }
-
-    this->beginResetModel();
-    this->aDirList = dirList;
-    this->endResetModel();
 }
 
 QString FileManagerModel::getRootPath()
