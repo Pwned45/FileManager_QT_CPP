@@ -147,7 +147,13 @@ void MainWindow::on_usb2Button_2_clicked()
 void MainWindow::on_lineEdit_editingFinished()
 {
     QString new_url = this->ui->lineEdit->displayText();
-    //обернуть в исключение которых кстати нету в qt(
     this->model->getFolderList(new_url,this->aDirList);
+}
+
+
+void MainWindow::on_lineEdit_2_editingFinished()
+{
+    QString new_url = this->ui->lineEdit_2->displayText();
+    this->model2->getFolderList(new_url,this->aDirList2);
 }
 

@@ -45,6 +45,8 @@ private slots:
 
     void on_lineEdit_editingFinished();
 
+    void on_lineEdit_2_editingFinished();
+
 private:
     Ui::MainWindow *ui;
 
