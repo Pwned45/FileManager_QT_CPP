@@ -12,7 +12,7 @@ void FileManagerModel::getFolderList(QString folderPath, QFileInfoList *dirList)
     QDir dir = QDir(folderPath);
 
 
-    if (folderPath == rootPath) //some root path
+    if (folderPath == rootPath || (rootPath +"/")==folderPath) //some root path
     {
         *dirList = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
         this->beginResetModel();

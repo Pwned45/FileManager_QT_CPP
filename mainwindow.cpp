@@ -155,7 +155,7 @@ void MainWindow::on_usb2Button_2_clicked()
 void MainWindow::on_lineEdit_editingFinished()
 {
     QString new_url = this->ui->lineEdit->displayText();
-    if (!this->model->getRootPath().endsWith("/")&& new_url.size()>0){
+    if (!this->model->getRootPath().endsWith("/")&& new_url.size()>0  && new_url!="/"){
         new_url=this->model->getRootPath() +"/" + new_url;
     }else {
     new_url = this->model->getRootPath() + new_url;
@@ -167,7 +167,7 @@ void MainWindow::on_lineEdit_editingFinished()
 void MainWindow::on_lineEdit_2_editingFinished()
 {
     QString new_url = this->ui->lineEdit_2->displayText();
-    if (!this->model2->getRootPath().endsWith("/") && new_url.size()>0){
+    if (!this->model2->getRootPath().endsWith("/") && new_url.size()>0 && new_url!="/"){
         new_url=this->model2->getRootPath() +"/" + new_url;
     }else {
     new_url = this->model2->getRootPath() + new_url;
