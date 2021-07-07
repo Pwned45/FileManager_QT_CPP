@@ -14,14 +14,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->model = new FileManagerModel(nullptr,rootHome);
     this->model->getFolderList(rootHome,this->aDirList);
+    this->model->setRootPath(rootHome);
 
     this->model2 = new FileManagerModel(nullptr,rootHome);
     this->model2->getFolderList(rootHome,this->aDirList2);
+    this->model2->setRootPath(rootHome);
 
     this->ui->listView->setModel(model);
     this->ui->listView_2->setModel(model2);
-    this->ui->lineEdit->setText(rootHome);
-    this->ui->lineEdit_2->setText(rootHome);
+    this->ui->lineEdit->setText("");
+    this->ui->lineEdit_2->setText("");
 
     QTimer *timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(timerCheckDisks()));
@@ -71,7 +73,7 @@ void MainWindow::on_listView_2_doubleClicked(const QModelIndex &index)
         {
             QString tmp = this->aDirList2->at(index.row()).absoluteFilePath();
             model2->getFolderList(this->aDirList2->at(index.row()).absoluteFilePath(),this->aDirList2);
-            this->ui->lineEdit_2->setText(tmp);
+            this->ui->lineEdit_2->setText(parseRootAndURL(model2->getRootPath(),tmp));
         } else {
             QDesktopServices::openUrl(QUrl(this->aDirList2->at(index.row()).absoluteFilePath()));
         }
@@ -84,7 +86,7 @@ void MainWindow::on_listView_doubleClicked(const QModelIndex &index)
         {
             QString tmp = this->aDirList->at(index.row()).absoluteFilePath();
             model->getFolderList(this->aDirList->at(index.row()).absoluteFilePath(),this->aDirList);
-            this->ui->lineEdit->setText(tmp);
+            this->ui->lineEdit->setText(parseRootAndURL(model->getRootPath(),tmp));
         } else {
             QDesktopServices::openUrl(QUrl(this->aDirList->at(index.row()).absoluteFilePath()));
         }
@@ -94,15 +96,17 @@ void MainWindow::on_listView_doubleClicked(const QModelIndex &index)
 
 void MainWindow::on_homeButton_clicked()
 {
+    this->model->setRootPath(rootHome);
     this->model->getFolderList(rootHome,this->aDirList);
-    this->ui->lineEdit->setText(rootHome);
+    this->ui->lineEdit->setText("");
 }
 
 
 void MainWindow::on_homeButton_2_clicked()
 {
+    this->model2->setRootPath(rootHome);
     this->model2->getFolderList(rootHome,this->aDirList2);
-    this->ui->lineEdit_2->setText(rootHome);
+    this->ui->lineEdit_2->setText("");
 }
 
 void MainWindow::timerCheckDisks()
@@ -115,22 +119,25 @@ void MainWindow::timerCheckDisks()
 
 void MainWindow::on_usb1Button_1_clicked()
 {
+    this->model->setRootPath(rootUsb1);
     this->model->getFolderList(rootUsb1,this->aDirList);
-    this->ui->lineEdit->setText(rootUsb1);
+    this->ui->lineEdit->setText("");
 }
 
 
 void MainWindow::on_usb2Button_1_clicked()
 {
+    this->model->setRootPath(rootUsb2);
     this->model->getFolderList(rootUsb2,this->aDirList);
-    this->ui->lineEdit->setText(rootUsb2);
+    this->ui->lineEdit->setText("");
 }
 
 
 void MainWindow::on_usb1Button_2_clicked()
 {
+    this->model2->setRootPath(rootUsb1);
     this->model2->getFolderList(rootUsb1,this->aDirList2);
-    this->ui->lineEdit_2->setText(rootUsb1);
+    this->ui->lineEdit_2->setText("");
 
 }
 
@@ -138,8 +145,9 @@ void MainWindow::on_usb1Button_2_clicked()
 
 void MainWindow::on_usb2Button_2_clicked()
 {
+    this->model2->setRootPath(rootUsb2);
     this->model2->getFolderList(rootUsb2,this->aDirList2);
-    this->ui->lineEdit_2->setText(rootUsb2);
+    this->ui->lineEdit_2->setText("");
 }
 
 
@@ -155,5 +163,15 @@ void MainWindow::on_lineEdit_2_editingFinished()
 {
     QString new_url = this->ui->lineEdit_2->displayText();
     this->model2->getFolderList(new_url,this->aDirList2);
+}
+
+QString MainWindow::parseRootAndURL(QString root, QString str)
+{
+
+    QStringList list = str.split(root);
+    if(list.at(1).indexOf('/')==0){
+        return list.at(1).right(list.at(1).size()-1);
+    }
+    return list.at(1);
 }
 

@@ -61,5 +61,7 @@ private:
     QFileInfoList *aDirList2;
 
     FileManagerModel *model2;
+    QString parseRootAndURL(QString root, QString str);
+    QString makeURLfromRootAndNewURL(QString root, QString str);
 };
 #endif // MAINWINDOW_H
