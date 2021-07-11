@@ -128,3 +128,34 @@ QString FileManagerModel::parseRootAndURL(QString root, QString str)
     return list.at(1);
 }
 
+QString FileManagerModel::getRootPathUSB1()
+{
+    return rootPathUSB1;
+}
+
+void FileManagerModel::setRootPathUSB1(QString newRootPathUSB1)
+{
+    rootPathUSB1 = newRootPathUSB1;
+}
+
+QString FileManagerModel::getRootPathUSB2()
+{
+    return rootPathUSB2;
+}
+
+
+void FileManagerModel::setRootPathUSB2( QString newRootPathUSB2)
+{
+    rootPathUSB2 = newRootPathUSB2;
+}
+
+QString FileManagerModel::getRootPathHome()
+{
+    return rootPathHome;
+}
+
+void FileManagerModel::setRootPathHome(QString newRootPathHome)
+{
+    rootPathHome = newRootPathHome;
+}
+

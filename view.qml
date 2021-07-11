@@ -71,7 +71,7 @@ ListView {
             //filesModel.rootPath = "C:/Users/Daniil/Documents"
 //            filesModel.dataChanged()
 //            filesModel.data()
-            filesModel.setRootPath("C:/Users/Daniil/Documents")
+            filesModel.setRootPath(filesModel.getRootPathHome())
             rectest.text = filesModel.getRootPath()
             filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
 
@@ -83,7 +83,7 @@ ListView {
         text: "usb1"
         onClicked: {
             //filesModel.rootPath = "F:/"
-            filesModel.setRootPath("F:/")
+            filesModel.setRootPath(filesModel.getRootPathUSB1())
             rectest.text = filesModel.getRootPath()
             filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
         }
@@ -94,7 +94,7 @@ ListView {
         id: buttonUsb2
         text: "usb2"
         onClicked: {
-            filesModel.setRootPath("G:/")
+            filesModel.setRootPath(filesModel.getRootPathUSB2())
             rectest.text = filesModel.getRootPath()
             filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
         }

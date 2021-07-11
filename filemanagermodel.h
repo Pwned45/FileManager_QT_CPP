@@ -24,6 +24,15 @@ public:
     Q_INVOKABLE void setRootPath(QString rootPath);
     Q_INVOKABLE void switchDir(const QModelIndex &index);
 
+    Q_INVOKABLE QString getRootPathUSB1() ;
+    Q_INVOKABLE void setRootPathUSB1( QString newRootPathUSB1);
+
+    Q_INVOKABLE QString getRootPathUSB2();
+    Q_INVOKABLE void setRootPathUSB2( QString newRootPathUSB2);
+
+    Q_INVOKABLE QString getRootPathHome();
+    Q_INVOKABLE void setRootPathHome( QString newRootPathHome);
+
 
     Q_INVOKABLE QFileInfoList *getADirList() const;
     void setADirList(QFileInfoList *newADirList);
@@ -33,6 +42,8 @@ public:
     //const QString &rootPath() const;
 
     //QFileInfoList *aDirList() const;
+
+
 
 signals:
     void aDirListChanged();
@@ -45,9 +56,15 @@ public slots:
 private:
     QFileInfoList *aDirList;
     QString rootPath;
+    QString rootPathUSB1;
+    QString rootPathUSB2;
+    QString rootPathHome;
 
 
     // QAbstractItemModel interface
+
+    // QAbstractItemModel interface
+
 };
 
 #endif // FILEMANAGERMODEL_H

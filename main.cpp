@@ -80,6 +80,9 @@ int main(int argc, char ** argv)
 
     filesModel->getFolderList(rootHome,aDirList);
     filesModel->setRootPath(rootHome);
+    filesModel->setRootPathHome(rootHome);
+    filesModel->setRootPathUSB1(rootUsb1);
+    filesModel->setRootPathUSB2(rootUsb2);
 
     QQuickView view;
     view.rootContext()->setContextProperty("filesModel", filesModel);
