@@ -15,6 +15,10 @@ class FileManagerModel : public QAbstractListModel
     //Q_PROPERTY(QFileInfoList * aDirList READ aDirList WRITE setADirList NOTIFY aDirListChanged)
 
 public:
+    enum FileManagerModelRoles {
+        FileManagerModelIconName = Qt::UserRole +1,
+        FileManagerModelFileName
+    };
 
     FileManagerModel(QObject *parent=nullptr,QString rootPath = nullptr);
     int rowCount(const QModelIndex &) const;
@@ -22,7 +26,7 @@ public:
     Q_INVOKABLE void getFolderList(QString folderPath, QFileInfoList *dirList);
     Q_INVOKABLE QString getRootPath();
     Q_INVOKABLE void setRootPath(QString rootPath);
-    Q_INVOKABLE void switchDir(const QModelIndex &index);
+    Q_INVOKABLE void switchDir(int index);
 
     Q_INVOKABLE QString getRootPathUSB1() ;
     Q_INVOKABLE void setRootPathUSB1( QString newRootPathUSB1);

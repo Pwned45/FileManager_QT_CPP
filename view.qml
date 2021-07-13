@@ -62,7 +62,7 @@ ListView {
 
     RowLayout {
         id:rowL
-
+/*
     Button{
         id: buttonHome
         text: "home"
@@ -100,30 +100,42 @@ ListView {
         }
 
     }
+
     TextEdit{
         id:rectest
         text: "URL://....."
         //EditingFinished: rectest.text =filesModel.getRootPath()
     }
-
+*/
     }
     }
-    delegate: Rectangle {
+    delegate: RowLayout {
         anchors.bottom: rowL
 
         width: filesView.width
         height: 25
         id: theDelegate
+        Image {
+            id: name
+
+            Layout.fillWidth: false
+            Layout.fillHeight: false
+            Layout.preferredHeight: theDelegate.height
+            Layout.preferredWidth: theDelegate.height
+            source: model.decoration
+        }
         Text { text: model.display
+            anchors.fill: parent
             MouseArea {
                 id: mousearea
                 anchors.fill: parent
 
+
                 //onDoubleClicked: console.log("MouseArea clicked" )
                 onDoubleClicked: {
                     //console.log("MouseArea clicked" + model.display)
-                    filesModel.getFolderList(filesModel.getRootPath() +"/" + model.display,filesModel.getADirList())
-                    //filesModel.switchDir(model.index) QModelIndex
+                    //filesModel.getFolderList(filesModel.getRootPath() +"/" + model.display,filesModel.getADirList())
+                    filesModel.switchDir(index)
                 }
             }}
     }
