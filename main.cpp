@@ -70,13 +70,14 @@ int main(int argc, char ** argv)
 {
     QGuiApplication app(argc, argv);
 
-    QString rootHome = "C:/Users/Daniil/Documents";
-    QString rootUsb1 = "F:/";
+    QString rootHome = "/home/user";
+    QString rootUsb1 = "/store/work";
     QString rootUsb2 = "G:/";
 
     QFileInfoList *aDirList = new QFileInfoList();
 
     FileManagerModel *filesModel = new FileManagerModel(nullptr,rootHome);
+    //qmlRegisterType("fm" ,1,0, FileManagerModel);
 
     filesModel->getFolderList(rootHome,aDirList);
     filesModel->setRootPath(rootHome);

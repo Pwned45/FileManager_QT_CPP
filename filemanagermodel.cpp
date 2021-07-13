@@ -40,16 +40,16 @@ void FileManagerModel::setRootPath(QString rootPath)
     this->rootPath = rootPath;
 }
 
-void FileManagerModel::switchDir(const QModelIndex &index)
+void FileManagerModel::switchDir(int index)
 {
-    if (this->aDirList->at(index.row()).isDir())
+    if (this->aDirList->at(index).isDir())
     {
-        QString tmp = this->aDirList->at(index.row()).absoluteFilePath();
-        this->getFolderList(this->aDirList->at(index.row()).absoluteFilePath(),this->aDirList);
+        QString tmp = this->aDirList->at(index).absoluteFilePath();
+        this->getFolderList(this->aDirList->at(index).absoluteFilePath(),this->aDirList);
         emit aDirListChanged();
         //this->ui->lineEdit->setText(parseRootAndURL(this->getRootPath(),tmp));
     } else {
-        QDesktopServices::openUrl(QUrl(this->aDirList->at(index.row()).absoluteFilePath()));
+        QDesktopServices::openUrl(QUrl(this->aDirList->at(index).absoluteFilePath()));
         emit aDirListChanged();
     }
 
@@ -77,6 +77,9 @@ QVariant FileManagerModel::data( const QModelIndex &index, int role ) const
 {
 
     QVariant value;
+    if (index.row()<0 || index.row()>=aDirList->size()){
+        return QVariant();
+    }
 
             switch ( role )
             {
@@ -89,15 +92,17 @@ QVariant FileManagerModel::data( const QModelIndex &index, int role ) const
                 case Qt::DecorationRole: //icon
                 {
                     if (this->aDirList->at(index.row()).isDir()) {
-                        QPixmap icon = QPixmap(":/img/folder.png");
-                        QPixmap tmp = icon.scaled(30, 30, Qt::KeepAspectRatio);
+                        QString tmp = QString("qrc:/img/folder.png");
+                        //QPixmap icon = QPixmap(":/img/folder.png");
+                        //QPixmap tmp = icon.scaled(30, 30, Qt::KeepAspectRatio);
                         value = tmp;
                         break;
                     }
 
                     if (this->aDirList->at(index.row()).isFile()) {
-                        QPixmap icon = QPixmap(":/img/file.png");
-                        QPixmap tmp = icon.scaled(30, 30, Qt::KeepAspectRatio);
+                        QString tmp = QString("qrc:/img/file.png");
+                        //QPixmap icon = QPixmap(":/img/file.png");
+                        //QPixmap tmp = icon.scaled(30, 30, Qt::KeepAspectRatio);
                         value = tmp;
                         break;
                     }
@@ -127,13 +132,6 @@ QString FileManagerModel::parseRootAndURL(QString root, QString str)
     }
     return list.at(1);
 }
-
-QModelIndex FileManagerModel::index(int row, int column, const QModelIndex &parent)
-{
-    return this->index(row,column,parent);
-}
-
-
 
 QString FileManagerModel::getRootPathUSB1()
 {
@@ -165,4 +163,3 @@ void FileManagerModel::setRootPathHome(QString newRootPathHome)
 {
     rootPathHome = newRootPathHome;
 }
-
