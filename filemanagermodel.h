@@ -65,6 +65,11 @@ private:
 
     // QAbstractItemModel interface
 
+
+    // QAbstractItemModel interface
+public:
+    QModelIndex index(int row, int column, const QModelIndex &parent) ;
+
 };
 
 #endif // FILEMANAGERMODEL_H

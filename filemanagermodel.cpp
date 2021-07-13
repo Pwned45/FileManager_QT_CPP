@@ -128,6 +128,13 @@ QString FileManagerModel::parseRootAndURL(QString root, QString str)
     return list.at(1);
 }
 
+QModelIndex FileManagerModel::index(int row, int column, const QModelIndex &parent)
+{
+    return this->index(row,column,parent);
+}
+
+
+
 QString FileManagerModel::getRootPathUSB1()
 {
     return rootPathUSB1;

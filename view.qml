@@ -108,8 +108,11 @@ ListView {
 
     }
     }
+        //anchors.verticalCenter: parent.verticalCenter
+
     delegate: Rectangle {
-        anchors.bottom: rowL
+        //anchors.bottom: rowL
+
 
         width: filesView.width
         height: 25
@@ -123,6 +126,7 @@ ListView {
                 onDoubleClicked: {
                     //console.log("MouseArea clicked" + model.display)
                     filesModel.getFolderList(filesModel.getRootPath() +"/" + model.display,filesModel.getADirList())
+                    console.log("MouseArea clicked" + styleData.index().row);
                     //filesModel.switchDir(model.index) QModelIndex
                 }
             }}
