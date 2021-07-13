@@ -3,7 +3,7 @@
 
 FileManagerModel::FileManagerModel(QObject *parent, QString rootPath):QAbstractListModel(parent)
 {
-    this->rootPath = rootPath;
+    this->m_rootPath = rootPath;
 
 }
 
@@ -12,18 +12,18 @@ void FileManagerModel::getFolderList(QString folderPath, QFileInfoList *dirList)
     QDir dir = QDir(folderPath);
 
 
-    if (folderPath == rootPath || (rootPath +"/")==folderPath) //some root path
+    if (folderPath == m_rootPath || (m_rootPath +"/")==folderPath) //some root path
     {
         *dirList = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
         this->beginResetModel();
-        this->aDirList = dirList;
+        this->m_DirList = dirList;
         this->endResetModel();
         emit aDirListChanged();
     } else{
-        if (folderPath > rootPath) {
+        if (folderPath > m_rootPath) {
         *dirList = dir.entryInfoList(QDir::NoDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
         this->beginResetModel();
-        this->aDirList = dirList;
+        this->m_DirList = dirList;
         this->endResetModel();
         emit aDirListChanged();
         }
@@ -32,24 +32,24 @@ void FileManagerModel::getFolderList(QString folderPath, QFileInfoList *dirList)
 
 QString FileManagerModel::getRootPath()
 {
-    return this->rootPath;
+    return this->m_rootPath;
 }
 
 void FileManagerModel::setRootPath(QString rootPath)
 {
-    this->rootPath = rootPath;
+    this->m_rootPath = rootPath;
 }
 
 void FileManagerModel::switchDir(int index)
 {
-    if (this->aDirList->at(index).isDir())
+    if (this->m_DirList->at(index).isDir())
     {
-        QString tmp = this->aDirList->at(index).absoluteFilePath();
-        this->getFolderList(this->aDirList->at(index).absoluteFilePath(),this->aDirList);
+        QString tmp = this->m_DirList->at(index).absoluteFilePath();
+        this->getFolderList(this->m_DirList->at(index).absoluteFilePath(),this->m_DirList);
         emit aDirListChanged();
         //this->ui->lineEdit->setText(parseRootAndURL(this->getRootPath(),tmp));
     } else {
-        QDesktopServices::openUrl(QUrl(this->aDirList->at(index).absoluteFilePath()));
+        QDesktopServices::openUrl(QUrl(this->m_DirList->at(index).absoluteFilePath()));
         emit aDirListChanged();
     }
 
@@ -57,27 +57,27 @@ void FileManagerModel::switchDir(int index)
 
 QFileInfoList *FileManagerModel::getADirList() const
 {
-    return aDirList;
+    return m_DirList;
 
 }
 
 void FileManagerModel::setADirList(QFileInfoList *newADirList)
 {
-    this->aDirList = newADirList;
+    this->m_DirList = newADirList;
 }
 
 
 
 int FileManagerModel::rowCount(const QModelIndex &) const
 {
-    return this->aDirList->count();
+    return this->m_DirList->count();
 }
 
 QVariant FileManagerModel::data( const QModelIndex &index, int role ) const
 {
 
     QVariant value;
-    if (index.row()<0 || index.row()>=aDirList->size()){
+    if (index.row()<0 || index.row()>=m_DirList->size()){
         return QVariant();
     }
 
@@ -85,35 +85,67 @@ QVariant FileManagerModel::data( const QModelIndex &index, int role ) const
             {
                 case Qt::DisplayRole: //string
                 {
-                    value = this->aDirList->at(index.row()).fileName();
+                    value = this->m_DirList->at(index.row()).fileName();
                 }
                 break;
 
                 case Qt::DecorationRole: //icon
                 {
-                    if (this->aDirList->at(index.row()).isDir()) {
-                        QString tmp = QString("qrc:/img/folder.png");
-                        //QPixmap icon = QPixmap(":/img/folder.png");
-                        //QPixmap tmp = icon.scaled(30, 30, Qt::KeepAspectRatio);
-                        value = tmp;
+                    if (this->m_DirList->at(index.row()).isDir()) {
+                        value = QString("qrc:/img/folder.png");
                         break;
                     }
 
-                    if (this->aDirList->at(index.row()).isFile()) {
-                        QString tmp = QString("qrc:/img/file.png");
-                        //QPixmap icon = QPixmap(":/img/file.png");
-                        //QPixmap tmp = icon.scaled(30, 30, Qt::KeepAspectRatio);
-                        value = tmp;
+                    if (this->m_DirList->at(index.row()).isFile()) {
+                        QString fileSuff = this->m_DirList->at(index.row()).completeSuffix();
+                        if (fileSuff == "zip") {
+                            value =  QString("qrc:/img/zip.png");
+                            break;
+                        } else if(fileSuff == "7zip"){
+                            value =  QString("qrc:/img/7zip.png");
+                            break;
+                        }else if(fileSuff == "apk"){
+                            value =  QString("qrc:/img/apk.png");
+                            break;
+                        }else if(fileSuff == "avi"){
+                            value =  QString("qrc:/img/avi.png");
+                            break;
+                        }else if(fileSuff == "exe"){
+                            value =  QString("qrc:/img/exe.png");
+                            break;
+                        }else if(fileSuff == "jpg"){
+                            value =  QString("qrc:/img/jpg.png");
+                            break;
+                        }else if(fileSuff == "mp3"){
+                            value =  QString("qrc:/img/mp3.png");
+                            break;
+                        }else if(fileSuff == "png"){
+                            value =  QString("qrc:/img/png.png");
+                            break;
+                        }else if(fileSuff == "txt"){
+                            value =  QString("qrc:/img/txt.png");
+                            break;
+                        }else if(fileSuff == "rar"){
+                            value =  QString("qrc:/img/rar.png");
+                            break;
+                        }else if(fileSuff == "mp4"){
+                            value =  QString("qrc:/img/mp4.png");
+                            break;
+                        }
+
+
+
+                        value = QString("qrc:/img/file.png");
                         break;
                     }
 
-                    value = this->aDirList->at(index.row()).fileName();
+                    value = this->m_DirList->at(index.row()).fileName();
                 }
                 break;
 
                 case Qt::UserRole: //data
                 {
-                    value = this->aDirList->at(index.row()).fileName();
+                    value = this->m_DirList->at(index.row()).fileName();
                 }
                 break;
 
@@ -135,31 +167,31 @@ QString FileManagerModel::parseRootAndURL(QString root, QString str)
 
 QString FileManagerModel::getRootPathUSB1()
 {
-    return rootPathUSB1;
+    return m_rootPathUSB1;
 }
 
 void FileManagerModel::setRootPathUSB1(QString newRootPathUSB1)
 {
-    rootPathUSB1 = newRootPathUSB1;
+    m_rootPathUSB1 = newRootPathUSB1;
 }
 
 QString FileManagerModel::getRootPathUSB2()
 {
-    return rootPathUSB2;
+    return m_rootPathUSB2;
 }
 
 
 void FileManagerModel::setRootPathUSB2( QString newRootPathUSB2)
 {
-    rootPathUSB2 = newRootPathUSB2;
+    m_rootPathUSB2 = newRootPathUSB2;
 }
 
 QString FileManagerModel::getRootPathHome()
 {
-    return rootPathHome;
+    return m_rootPathHome;
 }
 
 void FileManagerModel::setRootPathHome(QString newRootPathHome)
 {
-    rootPathHome = newRootPathHome;
+    m_rootPathHome = newRootPathHome;
 }

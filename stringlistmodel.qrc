@@ -1,8 +1,19 @@
 <RCC>
     <qresource prefix="/">
-        <file>view.qml</file>
-        <file>img/file.png</file>
-        <file>img/folder.png</file>
+        <file>FileManagerView.qml</file>
         <file>main.qml</file>
+        <file>img/7zip.png</file>
+        <file>img/apk.png</file>
+        <file>img/folder.png</file>
+        <file>img/jpg.png</file>
+        <file>img/mp3.png</file>
+        <file>img/rar.png</file>
+        <file>img/txt.png</file>
+        <file>img/avi.png</file>
+        <file>img/exe.png</file>
+        <file>img/file.png</file>
+        <file>img/png.png</file>
+        <file>img/zip.png</file>
+        <file>img/mp4.png</file>
     </qresource>
 </RCC>

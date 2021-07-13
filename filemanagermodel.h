@@ -10,9 +10,7 @@
 class FileManagerModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(QFileInfoList * aDirList READ getADirList WRITE setADirList NOTIFY aDirListChanged)
-    //Q_PROPERTY(QString rootPath READ rootPath WRITE setRootPath NOTIFY rootPathChanged)
-    //Q_PROPERTY(QFileInfoList * aDirList READ aDirList WRITE setADirList NOTIFY aDirListChanged)
+    Q_PROPERTY(QFileInfoList * m_DirList READ getADirList WRITE setADirList NOTIFY aDirListChanged)
 
 public:
     enum FileManagerModelRoles {
@@ -43,26 +41,21 @@ public:
 
     QString parseRootAndURL(QString root, QString str);
     QString makeURLfromRootAndNewURL(QString root, QString str);
-    //const QString &rootPath() const;
-
-    //QFileInfoList *aDirList() const;
 
 
 
 signals:
     void aDirListChanged();
 
-    //void rootPathChanged();
-
 public slots:
 
 
 private:
-    QFileInfoList *aDirList;
-    QString rootPath;
-    QString rootPathUSB1;
-    QString rootPathUSB2;
-    QString rootPathHome;
+    QFileInfoList *m_DirList;
+    QString m_rootPath;
+    QString m_rootPathUSB1;
+    QString m_rootPathUSB2;
+    QString m_rootPathHome;
 
 
     // QAbstractItemModel interface
