@@ -57,7 +57,13 @@ ListView {
     id: filesView
     width: 400
     height: 800
+
+    currentIndex: -1
+
     model: filesModel
+
+    spacing: 3
+
     ColumnLayout {
 
     RowLayout {
@@ -109,36 +115,76 @@ ListView {
 */
     }
     }
-    delegate: RowLayout {
-        anchors.bottom: rowL
-
+    delegate: Rectangle {
+        height: 80
         width: filesView.width
-        height: 25
-        id: theDelegate
-        Image {
-            id: name
 
-            Layout.fillWidth: false
-            Layout.fillHeight: false
-            Layout.preferredHeight: theDelegate.height
-            Layout.preferredWidth: theDelegate.height
-            source: model.decoration
+        radius: 5
+
+        color: filesView.currentIndex == index?"#8000ffff":"transparent"
+
+        border {
+            width: 2
+            color: filesView.currentIndex == index?"#ff00ffff":"#20000000"
         }
-        Text { text: model.display
-            anchors.fill: parent
-            MouseArea {
-                id: mousearea
-                anchors.fill: parent
 
+        RowLayout {
+            id: theDelegate
 
-                //onDoubleClicked: console.log("MouseArea clicked" )
-                onDoubleClicked: {
-                    //console.log("MouseArea clicked" + model.display)
-                    //filesModel.getFolderList(filesModel.getRootPath() +"/" + model.display,filesModel.getADirList())
-                    filesModel.switchDir(index)
+            anchors {
+                fill : parent
+                margins: 5
+            }
+
+            Image {
+                id: name
+
+                Layout.fillWidth: false
+                Layout.fillHeight: false
+                Layout.preferredHeight: theDelegate.height
+                Layout.preferredWidth: theDelegate.height
+
+                source: model.decoration
+            }
+
+            Text {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+
+                font {
+                    pixelSize: 22
                 }
-            }}
-    }
 
+                elide: Text.ElideRight
+
+                color: "red"
+
+                text: model.display
+            }
+        }
+
+        MouseArea {
+            id: mousearea
+            anchors.fill: parent
+
+            onPressed: {
+                if (filesView.currentIndex == index)
+                    filesView.currentIndex = -1
+                else
+                    filesView.currentIndex = index
+            }
+
+
+            //onDoubleClicked: console.log("MouseArea clicked" )
+            onDoubleClicked: {
+                //console.log("MouseArea clicked" + model.display)
+                //filesModel.getFolderList(filesModel.getRootPath() +"/" + model.display,filesModel.getADirList())
+                filesModel.switchDir(index)
+            }
+        }
+    }
 }
 //![0]
