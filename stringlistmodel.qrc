@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>FileManagerView.qml</file>
+        <file>FileManagerControl.qml</file>
+	<file>FileManagerView.qml</file>
         <file>main.qml</file>
         <file>img/7zip.png</file>
         <file>img/apk.png</file>

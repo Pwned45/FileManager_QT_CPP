@@ -1,41 +1,24 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.0
+import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
 
-ColumnLayout {
-    RowLayout{
+Window {
+    visible: true
+    width: 800
+    height: 600
 
-        Button{
-            id: buttonHome
-            text: "home"
-            onClicked: {
-                filesModel.setRootPath(filesModel.getRootPathHome())
-                //rectest.text = filesModel.getRootPath()
-                filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
-            }
-        }
-        Button{
-            id: buttonUsb1
-            text: "usb1"
-            onClicked: {
-                filesModel.setRootPath(filesModel.getRootPathUSB1())
-                //rectest.text = filesModel.getRootPath()
-                filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
-            }
-        }
-        Button{
-            id: buttonUsb2
-            text: "usb2"
-            onClicked: {
-                filesModel.setRootPath(filesModel.getRootPathUSB2())
-                //rectest.text = filesModel.getRootPath()
-                filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
-            }
+    ColumnLayout {
+        anchors.fill: parent
+
+        FileManagerControl {
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+            Layout.preferredHeight: 80
         }
 
+        FileManagerView {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+        }
     }
-    Loader {
-        source: "FileManagerView.qml"
-    }
-
 }

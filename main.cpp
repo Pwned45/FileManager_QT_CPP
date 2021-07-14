@@ -53,12 +53,14 @@
 #include <QFileInfoList>
 #include <QGuiApplication>
 #include <QStringList>
+#include <QQmlApplicationEngine>
 
 #include <qqmlengine.h>
 #include <qqmlcontext.h>
 #include <qqml.h>
 #include <QtQuick/qquickitem.h>
 #include <QtQuick/qquickview.h>
+
 
 
 /*
@@ -70,8 +72,8 @@ int main(int argc, char ** argv)
 {
     QGuiApplication app(argc, argv);
 
-    QString rootHome = "C:/Users/Daniil/Documents";
-    QString rootUsb1 = "F:/";
+    QString rootHome = "/home/user";
+    QString rootUsb1 = "/store/work";
     QString rootUsb2 = "G:/";
 
     QFileInfoList *aDirList = new QFileInfoList();
@@ -85,10 +87,10 @@ int main(int argc, char ** argv)
     filesModel->setRootPathUSB1(rootUsb1);
     filesModel->setRootPathUSB2(rootUsb2);
 
-    QQuickView main;
-    main.rootContext()->setContextProperty("filesModel", filesModel);
-    main.setSource(QUrl("qrc:main.qml"));
-    main.show();
+    QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("filesModel", filesModel);
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
 
     return app.exec();
 }

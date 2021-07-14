@@ -98,44 +98,12 @@ QVariant FileManagerModel::data( const QModelIndex &index, int role ) const
 
                     if (this->m_DirList->at(index.row()).isFile()) {
                         QString fileSuff = this->m_DirList->at(index.row()).completeSuffix();
-                        if (fileSuff == "zip") {
-                            value =  QString("qrc:/img/zip.png");
-                            break;
-                        } else if(fileSuff == "7zip"){
-                            value =  QString("qrc:/img/7zip.png");
-                            break;
-                        }else if(fileSuff == "apk"){
-                            value =  QString("qrc:/img/apk.png");
-                            break;
-                        }else if(fileSuff == "avi"){
-                            value =  QString("qrc:/img/avi.png");
-                            break;
-                        }else if(fileSuff == "exe"){
-                            value =  QString("qrc:/img/exe.png");
-                            break;
-                        }else if(fileSuff == "jpg"){
-                            value =  QString("qrc:/img/jpg.png");
-                            break;
-                        }else if(fileSuff == "mp3"){
-                            value =  QString("qrc:/img/mp3.png");
-                            break;
-                        }else if(fileSuff == "png"){
-                            value =  QString("qrc:/img/png.png");
-                            break;
-                        }else if(fileSuff == "txt"){
-                            value =  QString("qrc:/img/txt.png");
-                            break;
-                        }else if(fileSuff == "rar"){
-                            value =  QString("qrc:/img/rar.png");
-                            break;
-                        }else if(fileSuff == "mp4"){
-                            value =  QString("qrc:/img/mp4.png");
-                            break;
+
+                        if ( QFile::exists(":/img/" + fileSuff +".png") ) {
+                           value = QString("qrc:/img/" + fileSuff +".png");
+                        } else {
+                            value = QString("qrc:/img/file.png");
                         }
-
-
-
-                        value = QString("qrc:/img/file.png");
                         break;
                     }
 
