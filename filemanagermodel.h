@@ -42,10 +42,16 @@ public:
     QString parseRootAndURL(QString root, QString str);
     QString makeURLfromRootAndNewURL(QString root, QString str);
 
+    Q_INVOKABLE const QString getCurrMarked() const;
+    Q_INVOKABLE void setCurrMarked( QString newCurrMarket);
+    Q_INVOKABLE void setCurrMarked(int index);
 
+    Q_INVOKABLE const QString getEnterDirCurrMarked() const;
+    void setEnterDirCurrMarked( QString newEnterDirCurrMarked);
 
 signals:
     void aDirListChanged();
+    void sendCurrMarkedToQML(QString currmarked);
 
 public slots:
 
@@ -56,6 +62,8 @@ private:
     QString m_rootPathUSB1;
     QString m_rootPathUSB2;
     QString m_rootPathHome;
+    QString m_currMarked;
+    QString m_enterDirCurrMarked;
 
 
     // QAbstractItemModel interface

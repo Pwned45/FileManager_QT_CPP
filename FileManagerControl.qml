@@ -4,13 +4,18 @@ import QtQuick.Layouts 1.3
 
 ColumnLayout {
     RowLayout{
+        Connections{
+            target: filesModel
+            function onSendCurrMarkedToQML(currmarked){
+                labelCurrMarked.text = currmarked
+            }
+        }
 
         Button{
             id: buttonHome
             text: "home"
             onClicked: {
                 filesModel.setRootPath(filesModel.getRootPathHome())
-                //rectest.text = filesModel.getRootPath()
                 filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
             }
         }
@@ -19,7 +24,6 @@ ColumnLayout {
             text: "usb1"
             onClicked: {
                 filesModel.setRootPath(filesModel.getRootPathUSB1())
-                //rectest.text = filesModel.getRootPath()
                 filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
             }
         }
@@ -28,10 +32,13 @@ ColumnLayout {
             text: "usb2"
             onClicked: {
                 filesModel.setRootPath(filesModel.getRootPathUSB2())
-                //rectest.text = filesModel.getRootPath()
                 filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
             }
         }
+       Label{
+           id: labelCurrMarked
+           text:filesModel.getCurrMarked()
+       }
 
     }
 }

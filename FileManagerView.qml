@@ -78,10 +78,15 @@ ListView {
             anchors.fill: parent
 
             onPressed: {
-                if (filesView.currentIndex == index)
+                if (filesView.currentIndex == index) {
                     filesView.currentIndex = -1
-                else
+                    filesModel.setCurrMarked(filesModel.getEnterDirCurrMarked())
+                }
+                else {
                     filesView.currentIndex = index
+                    filesModel.setCurrMarked(index)
+                }
+
             }
             onDoubleClicked: {
                 //console.log("MouseArea clicked" + model.display)

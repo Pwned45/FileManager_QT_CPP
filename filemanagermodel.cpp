@@ -4,6 +4,9 @@
 FileManagerModel::FileManagerModel(QObject *parent, QString rootPath):QAbstractListModel(parent)
 {
     this->m_rootPath = rootPath;
+    this->m_currMarked = rootPath;
+    emit sendCurrMarkedToQML(m_currMarked);
+    this->m_enterDirCurrMarked = rootPath;
 
 }
 
@@ -17,15 +20,20 @@ void FileManagerModel::getFolderList(QString folderPath, QFileInfoList *dirList)
         *dirList = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
         this->beginResetModel();
         this->m_DirList = dirList;
+        this->m_enterDirCurrMarked = folderPath;
+        this->m_currMarked = folderPath;
+        emit sendCurrMarkedToQML(m_currMarked);
         this->endResetModel();
-        emit aDirListChanged();
+
     } else{
         if (folderPath > m_rootPath) {
         *dirList = dir.entryInfoList(QDir::NoDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
         this->beginResetModel();
         this->m_DirList = dirList;
+        this->m_enterDirCurrMarked = folderPath;
+        this->m_currMarked = folderPath;
+        emit sendCurrMarkedToQML(m_currMarked);
         this->endResetModel();
-        emit aDirListChanged();
         }
     }
 }
@@ -132,6 +140,34 @@ QString FileManagerModel::parseRootAndURL(QString root, QString str)
     }
     return list.at(1);
 }
+
+const QString FileManagerModel::getCurrMarked() const
+{
+    return m_currMarked;
+}
+
+void FileManagerModel::setCurrMarked(QString newCurrMarked)
+{
+    m_currMarked = newCurrMarked;
+    emit sendCurrMarkedToQML(m_currMarked);
+}
+
+void FileManagerModel::setCurrMarked(int index)
+{
+    m_currMarked = this->m_DirList->at(index).absoluteFilePath();
+    emit sendCurrMarkedToQML(m_currMarked);
+}
+
+const QString FileManagerModel::getEnterDirCurrMarked() const
+{
+    return m_enterDirCurrMarked;
+}
+
+void FileManagerModel::setEnterDirCurrMarked(QString newEnterDirCurrMarked)
+{
+    m_enterDirCurrMarked = newEnterDirCurrMarked;
+}
+
 
 QString FileManagerModel::getRootPathUSB1()
 {

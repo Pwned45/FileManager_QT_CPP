@@ -72,8 +72,8 @@ int main(int argc, char ** argv)
 {
     QGuiApplication app(argc, argv);
 
-    QString rootHome = "/home/user";
-    QString rootUsb1 = "/store/work";
+    QString rootHome = "C:/Users/Daniil/Documents";
+    QString rootUsb1 = "F:/";
     QString rootUsb2 = "G:/";
 
     QFileInfoList *aDirList = new QFileInfoList();
