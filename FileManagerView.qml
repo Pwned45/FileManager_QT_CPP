@@ -89,8 +89,6 @@ ListView {
 
             }
             onDoubleClicked: {
-                //console.log("MouseArea clicked" + model.display)
-                //filesModel.getFolderList(filesModel.getRootPath() +"/" + model.display,filesModel.getADirList())
                 filesModel.switchDir(index)
             }
         }

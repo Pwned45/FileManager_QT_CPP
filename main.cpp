@@ -86,6 +86,8 @@ int main(int argc, char ** argv)
     filesModel->setRootPathHome(rootHome);
     filesModel->setRootPathUSB1(rootUsb1);
     filesModel->setRootPathUSB2(rootUsb2);
+    filesModel->setVisibleButtonUSB1(1);
+    filesModel->setVisibleButtonUSB2(1);
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("filesModel", filesModel);

@@ -46,6 +46,7 @@ QString FileManagerModel::getRootPath()
 void FileManagerModel::setRootPath(QString rootPath)
 {
     this->m_rootPath = rootPath;
+    emit changeRootPath();
 }
 
 void FileManagerModel::switchDir(int index)
@@ -168,6 +169,35 @@ void FileManagerModel::setEnterDirCurrMarked(QString newEnterDirCurrMarked)
     m_enterDirCurrMarked = newEnterDirCurrMarked;
 }
 
+const QString FileManagerModel::getChoosenButtonRootPath()
+{
+    return m_choosenButtonRootPath;
+}
+
+void FileManagerModel::setChoosenButtonRootPath(QString newChoosenButtonRootPath)
+{
+    m_choosenButtonRootPath = newChoosenButtonRootPath;
+}
+
+int FileManagerModel::getVisibleButtonUSB1() const
+{
+    return m_visibleButtonUSB1;
+}
+
+int FileManagerModel::getVisibleButtonUSB2() const
+{
+    return m_visibleButtonUSB2;
+}
+
+void FileManagerModel::setVisibleButtonUSB2(int newVisibleButtonUSB2)
+{
+    m_visibleButtonUSB2 = newVisibleButtonUSB2;
+}
+
+void FileManagerModel::setVisibleButtonUSB1(int newVisibleButtonUSB1)
+{
+    m_visibleButtonUSB1 = newVisibleButtonUSB1;
+}
 
 QString FileManagerModel::getRootPathUSB1()
 {

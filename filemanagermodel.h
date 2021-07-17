@@ -49,9 +49,20 @@ public:
     Q_INVOKABLE const QString getEnterDirCurrMarked() const;
     void setEnterDirCurrMarked( QString newEnterDirCurrMarked);
 
+    const QString getChoosenButtonRootPath() ;
+    void setChoosenButtonRootPath( QString newChoosenButtonRootPath);
+
+    Q_INVOKABLE int getVisibleButtonUSB1() const;
+
+    Q_INVOKABLE int getVisibleButtonUSB2() const;
+    void setVisibleButtonUSB2(int newVisibleButtonUSB2);
+
+    void setVisibleButtonUSB1(int newVisibleButtonUSB1);
+
 signals:
     void aDirListChanged();
     void sendCurrMarkedToQML(QString currmarked);
+    void changeRootPath();
 
 public slots:
 
@@ -64,6 +75,9 @@ private:
     QString m_rootPathHome;
     QString m_currMarked;
     QString m_enterDirCurrMarked;
+    QString m_choosenButtonRootPath;
+    int m_visibleButtonUSB1;
+    int m_visibleButtonUSB2;
 
 
     // QAbstractItemModel interface
