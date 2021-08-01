@@ -9,9 +9,6 @@ ColumnLayout {
             function onSendCurrMarkedToQML(currmarked){
                 labelCurrMarked.text = currmarked
             }
-            function onChangeRootPath(){
-
-            }
         }
 
         Button{

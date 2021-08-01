@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QStorageInfo>
 
 class FileManagerModel : public QAbstractListModel
 {
@@ -43,6 +44,7 @@ public:
     QString makeURLfromRootAndNewURL(QString root, QString str);
 
     Q_INVOKABLE const QString getCurrMarked() const;
+    Q_INVOKABLE const QString getCurrMarkedInfo() const;
     Q_INVOKABLE void setCurrMarked( QString newCurrMarket);
     Q_INVOKABLE void setCurrMarked(int index);
 
@@ -62,6 +64,7 @@ public:
 signals:
     void aDirListChanged();
     void sendCurrMarkedToQML(QString currmarked);
+    void sendCurrMarkedInfoToQML(QString currmarked);
     void changeRootPath();
 
 public slots:
@@ -73,11 +76,15 @@ private:
     QString m_rootPathUSB1;
     QString m_rootPathUSB2;
     QString m_rootPathHome;
+    QStringList m_roots;
     QString m_currMarked;
     QString m_enterDirCurrMarked;
     QString m_choosenButtonRootPath;
     int m_visibleButtonUSB1;
     int m_visibleButtonUSB2;
+
+    QString fileSize (qint64 nSize) const;
+    qint64 listFolder ( QString path ) const;
 
 
     // QAbstractItemModel interface

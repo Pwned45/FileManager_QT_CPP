@@ -20,5 +20,10 @@ Window {
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
+        FileManagerInfo {
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+            Layout.preferredHeight: 40
+        }
     }
 }

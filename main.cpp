@@ -73,8 +73,8 @@ int main(int argc, char ** argv)
     QGuiApplication app(argc, argv);
 
     QString rootHome = "C:/Users/Daniil/Documents";
-    QString rootUsb1 = "F:/";
-    QString rootUsb2 = "G:/";
+    QString rootUsb1 = "F:/Android studio";
+    QString rootUsb2 = "G:/enterprise";
 
     QFileInfoList *aDirList = new QFileInfoList();
 

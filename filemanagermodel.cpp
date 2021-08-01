@@ -47,10 +47,15 @@ void FileManagerModel::setRootPath(QString rootPath)
 {
     this->m_rootPath = rootPath;
     emit changeRootPath();
+    this->m_currMarked = rootPath;
+    emit sendCurrMarkedInfoToQML(getCurrMarkedInfo());
 }
 
 void FileManagerModel::switchDir(int index)
 {
+    if (this->m_DirList->at(index).isSymLink()){
+
+    }
     if (this->m_DirList->at(index).isDir())
     {
         QString tmp = this->m_DirList->at(index).absoluteFilePath();
@@ -89,7 +94,6 @@ QVariant FileManagerModel::data( const QModelIndex &index, int role ) const
     if (index.row()<0 || index.row()>=m_DirList->size()){
         return QVariant();
     }
-
             switch ( role )
             {
                 case Qt::DisplayRole: //string
@@ -147,16 +151,73 @@ const QString FileManagerModel::getCurrMarked() const
     return m_currMarked;
 }
 
+const QString FileManagerModel::getCurrMarkedInfo() const
+{
+    QString str = "";
+    if (QFile(m_currMarked).exists()){
+        if(QFileInfo(m_currMarked).isDir()){
+            str += QFileInfo(m_currMarked).lastModified().toString()
+                    +" "+ fileSize(listFolder(m_currMarked))
+                    +" "+ fileSize(QStorageInfo(m_rootPath).bytesAvailable())
+                    +"/"+ fileSize(QStorageInfo(m_rootPath).bytesTotal());
+            return str;
+        }else {
+            str += QFileInfo(m_currMarked).lastModified().toString()
+                    +" "+ fileSize(QFileInfo(m_currMarked).size())
+                    +" "+ fileSize(QStorageInfo(m_rootPath).bytesAvailable())
+                    +"/"+ fileSize(QStorageInfo(m_rootPath).bytesTotal());
+            return str;
+        }
+
+    }else {
+        return str = "catalog does not exists";
+    }
+}
+QString FileManagerModel::fileSize(qint64 nSize) const
+{
+    qint64 i = 0;
+    for (; nSize > 1023; nSize /= 1024, ++i) {
+        if(i >= 4) {
+        break;
+        }
+    }
+    return QString().setNum(nSize) + "BKMGT"[i];
+}
+qint64 FileManagerModel::listFolder (QString path) const {
+    QDir currentFolder(path);
+
+    qint64 totalsize = 0;
+
+    currentFolder.setFilter( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
+    currentFolder.setSorting( QDir::Name );
+
+    QFileInfoList folderitems( currentFolder.entryInfoList() );
+
+    foreach ( QFileInfo i, folderitems ) {
+        QString iname( i.fileName() );
+        if ( iname == "." || iname == ".." || iname.isEmpty() )
+            continue;
+
+        if ( i.isDir() )
+            totalsize += listFolder( path+"/"+iname );
+        else
+            totalsize += i.size();
+    }
+    return totalsize;
+}
+
 void FileManagerModel::setCurrMarked(QString newCurrMarked)
 {
     m_currMarked = newCurrMarked;
     emit sendCurrMarkedToQML(m_currMarked);
+    emit sendCurrMarkedInfoToQML(getCurrMarkedInfo());
 }
 
 void FileManagerModel::setCurrMarked(int index)
 {
     m_currMarked = this->m_DirList->at(index).absoluteFilePath();
     emit sendCurrMarkedToQML(m_currMarked);
+    emit sendCurrMarkedInfoToQML(getCurrMarkedInfo());
 }
 
 const QString FileManagerModel::getEnterDirCurrMarked() const

@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>FileManagerControl.qml</file>
-	<file>FileManagerView.qml</file>
+        <file>FileManagerView.qml</file>
         <file>main.qml</file>
         <file>img/7zip.png</file>
         <file>img/apk.png</file>
@@ -16,5 +16,6 @@
         <file>img/png.png</file>
         <file>img/zip.png</file>
         <file>img/mp4.png</file>
+        <file>FileManagerInfo.qml</file>
     </qresource>
 </RCC>
