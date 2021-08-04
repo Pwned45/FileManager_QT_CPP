@@ -19,6 +19,7 @@ Window {
         FileManagerView {
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.preferredHeight: 40
         }
         FileManagerInfo {
             Layout.fillWidth: true

@@ -54,7 +54,7 @@ void FileManagerModel::setRootPath(QString rootPath)
 void FileManagerModel::switchDir(int index)
 {
     if (this->m_DirList->at(index).isSymLink()){
-
+        return;
     }
     if (this->m_DirList->at(index).isDir())
     {
