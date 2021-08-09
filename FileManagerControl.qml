@@ -10,9 +10,7 @@ ColumnLayout {
                 labelCurrMarked.text = currmarked
             }
         }
-        /* Номер создаваемой кнопки, для её визуальной идентификации
-             * при демонстрации проекта
-             */
+        height: 50
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
@@ -68,40 +66,59 @@ ColumnLayout {
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
-
+                spacing: 3
                 /* в данном свойстве задаём вёрстку одного объекта
                  * который будем отображать в списке в качестве одного элемента списка
                  * */
+                Flickable {
+                    anchors.fill: parent
+                    contentWidth: row.width
+                    Row {
+                        id: row
 
-                delegate: Item {
-                    id: item
-                    height: 40
+                        height: parent.height
 
-                    // В данном элементе будет находиться одна кнопка
-                    Button {
-                        anchors.margins: 5
+                        Repeater {
 
-                        /* самое интересное в данном объекте
+                            delegate: Rectangle {
+                                id: theDelegate
+
+                                height: 40
+                                width: 40
+
+
+                                // В данном элементе будет находиться одна кнопка
+                                Button {
+                                    anchors.margins: 5
+                                    anchors.fill: parent
+
+
+                                    /* самое интересное в данном объекте
                          * задаём свойству text переменную, по имени которой будем задавать
                          * свойства элемента
                          * */
-                        text: idshnik
 
-                        // По клику по кнопке отдаём в текстовое поле индекс элемента в ListView
-                        onClicked: {
-                            textIndex.text = index
+                                    // По клику по кнопке отдаём в текстовое поле индекс элемента в ListView
+                                    onClicked: {
+                                        textIndex.text = index
+                                    }
+                                    Text {
+                                        anchors.centerIn: parent
+                                        renderType: Text.NativeRendering
+                                        text: idshnik
+                                    }
+                                }
+                            }
+                            // Сама модель, в которой будут содержаться все элементы
+                            model: ListModel {
+                                id: listModel // задаём ей id для обращения
+                            }
                         }
+
                     }
                 }
-
-                // Сама модель, в которой будут содержаться все элементы
-                model: ListModel {
-                    id: listModel // задаём ей id для обращения
-                }
-
-
-
             }
+
             Button{
                 id: buttonHome
                 text: "home"
