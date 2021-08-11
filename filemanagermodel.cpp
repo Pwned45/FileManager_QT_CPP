@@ -260,6 +260,49 @@ void FileManagerModel::setVisibleButtonUSB1(int newVisibleButtonUSB1)
     m_visibleButtonUSB1 = newVisibleButtonUSB1;
 }
 
+QString FileManagerModel::getbyIdFromRoots(int index)
+{
+    return m_roots->at(index);
+
+}
+
+void FileManagerModel::addToRoots(QString item)
+{
+    m_roots->append(item);
+}
+
+void FileManagerModel::removeFromRoots(int index)
+{
+    m_roots->removeAt(index);
+}
+
+QString FileManagerModel::getPathByIdFromButtons(int index)
+{
+    return m_buttons.at(index)->getPath();
+}
+
+QString FileManagerModel::getNameByIdFromButtons(int index)
+{
+    return m_buttons.at(index)->getName();
+}
+
+void FileManagerModel::addToButtons(QString path, QString name)
+{
+    m_buttons.append(new FileManagerButton(path,name));
+
+}
+
+void FileManagerModel::addToButtons(QString path, QString name, int stage, bool ismarked)
+{
+    m_buttons.append(new FileManagerButton(path,name,stage,ismarked));
+}
+
+void FileManagerModel::removeFromButtons(int index)
+{
+    m_buttons.removeAt(index);
+
+}
+
 QString FileManagerModel::getRootPathUSB1()
 {
     return m_rootPathUSB1;

@@ -10,8 +10,6 @@ ColumnLayout {
                 labelCurrMarked.text = currmarked
             }
         }
-
-
         Label{
             id: labelCurrMarked
             text:filesModel.getCurrMarkedInfo()

@@ -7,6 +7,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QStorageInfo>
+#include "filemanagerbutton.h"
 
 class FileManagerModel : public QAbstractListModel
 {
@@ -61,6 +62,16 @@ public:
 
     void setVisibleButtonUSB1(int newVisibleButtonUSB1);
 
+    Q_INVOKABLE QString getbyIdFromRoots(int index);
+    Q_INVOKABLE void addToRoots(QString item);
+    Q_INVOKABLE void removeFromRoots(int index);
+
+    Q_INVOKABLE QString getPathByIdFromButtons(int index);
+    Q_INVOKABLE QString getNameByIdFromButtons(int index);
+    Q_INVOKABLE void addToButtons(QString path,QString name);
+    Q_INVOKABLE void addToButtons(QString path,QString name,int stage, bool ismarked);
+    Q_INVOKABLE void removeFromButtons(int index);
+
 signals:
     void aDirListChanged();
     void sendCurrMarkedToQML(QString currmarked);
@@ -76,7 +87,8 @@ private:
     QString m_rootPathUSB1;
     QString m_rootPathUSB2;
     QString m_rootPathHome;
-    QStringList m_roots;
+    QList<FileManagerButton*> m_buttons;
+    QStringList * m_roots = new QStringList();
     QString m_currMarked;
     QString m_enterDirCurrMarked;
     QString m_choosenButtonRootPath;

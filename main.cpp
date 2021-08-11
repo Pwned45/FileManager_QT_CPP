@@ -49,6 +49,8 @@
 ****************************************************************************/
 
 #include "filemanagermodel.h"
+#include "filemanagerbutton.h"
+#include "filemanagercontrolmodel.h"
 
 #include <QFileInfoList>
 #include <QGuiApplication>
@@ -76,6 +78,12 @@ int main(int argc, char ** argv)
     QString rootUsb1 = "F:/Android studio";
     QString rootUsb2 = "G:/enterprise";
 
+    QList<FileManagerButton*> list = {
+        new FileManagerButton("F:/Android studio","1"),
+        new FileManagerButton("G:/enterprise","2")};
+    FileManagerControlModel * controlModel= new FileManagerControlModel();
+    controlModel->setButtons(list);
+
     QFileInfoList *aDirList = new QFileInfoList();
 
     FileManagerModel *filesModel = new FileManagerModel(nullptr,rootHome);
@@ -88,9 +96,9 @@ int main(int argc, char ** argv)
     filesModel->setRootPathUSB2(rootUsb2);
     filesModel->setVisibleButtonUSB1(1);
     filesModel->setVisibleButtonUSB2(1);
-
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("filesModel", filesModel);
+    engine.rootContext()->setContextProperty("controlModel", controlModel);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
 

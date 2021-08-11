@@ -15,172 +15,179 @@ ColumnLayout {
         anchors.left: parent.left
         anchors.right: parent.right
 
-                // Задаём размещение поля с индексом кнопки
-                Rectangle {
-                    // Устанавливаем текстовое поле для размещения индекса кнопки
-                    Text {
-                        id: textIndex
-                        text: ""
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                    }
-                }
-                // Кнопка для создания динамических кнопок
-                Button {
-                    property int number: 0
+        // Задаём размещение поля с индексом кнопки
+        Rectangle {
+            // Устанавливаем текстовое поле для размещения индекса кнопки
+            Text {
+                id: textIndex
+                text: ""
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                visible: false;
+            }
+        }
+        // Кнопка для создания динамических кнопок
+        Button {
+            property int number: 0
 
-                    id: button1
-                    text: qsTr("Create Button")
+            id: button1
+            text: qsTr("Создать закладку")
 
-                    /* По клику по кнопке добавляем в model ListView
+            /* По клику по кнопке добавляем в model ListView
                      * объект, с заданными параметрами
                      * */
-                    onClicked: {
-                        listModel.append({idshnik: "Button " + (++number)})
+            onClicked: {
+                listModel.append({idshnik: "Закладка " + (++number)})
+                filesModel.addToRoots(filesModel.getCurrMarked())
 
-                    }
+            }
+        }
+
+        // Кнопка для удаления динамических кнопок
+        Button {
+            id: button2
+            text: qsTr("Удалить закладку")
+            width: 50
+            height: 50
+
+            // Удаляем кнопку по её индексу в ListView
+            onClicked: {
+                if(textIndex.text != ""){
+                    listModel.remove(textIndex.text)
+                    filesModel.removeFromRoots(textIndex.text)
+                    textIndex.text = "" // Обнуляем текстовое поле с индексом
                 }
-
-                // Кнопка для удаления динамических кнопок
-                Button {
-                    id: button2
-                    text: qsTr("Delete Button")
-                    width: (parent.width / 5)*2
-                    height: 50
-
-                    // Удаляем кнопку по её индексу в ListView
-                    onClicked: {
-                        if(textIndex.text != ""){
-                            listModel.remove(textIndex.text)
-                            textIndex.text = "" // Обнуляем текстовое поле с индексом
-                        }
-                    }
-                }
+            }
+        }
 
 
-            // ListView для представления данных в виде списка
-            ListView {
-                id: listView1
-                // Размещаем его в оставшейся части окна приложения
-                anchors.top: row.bottom
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-                spacing: 3
-                /* в данном свойстве задаём вёрстку одного объекта
+        // ListView для представления данных в виде списка
+        ListView {
+            id: listView1
+            // Размещаем его в оставшейся части окна приложения
+            anchors.top: row.bottom
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            spacing: 3
+            /* в данном свойстве задаём вёрстку одного объекта
                  * который будем отображать в списке в качестве одного элемента списка
                  * */
-                Flickable {
-                    anchors.fill: parent
-                    contentWidth: row.width
-                    Row {
-                        id: row
+            Flickable {
+                anchors.fill: parent
+                contentWidth: row.width
+                Row {
+                    id: row
 
-                        height: parent.height
+                    height: parent.height
 
-                        Repeater {
+                    Repeater {
 
-                            delegate: Rectangle {
-                                id: theDelegate
-
-                                height: 40
-                                width: 40
-
-
-                                // В данном элементе будет находиться одна кнопка
-                                Button {
-                                    anchors.margins: 5
-                                    anchors.fill: parent
-
-
-                                    /* самое интересное в данном объекте
+                        delegate: Rectangle {
+                            id: theDelegate
+                            height: 45
+                            width: 45
+                            radius: 5
+                            // В данном элементе будет находиться одна кнопка
+                            Button {
+                                anchors.margins: 3
+                                anchors.fill: parent
+                                background: Rectangle {
+                                    implicitWidth: 40
+                                    implicitHeight: 40
+                                    color:filesModel.getRootPath() === filesModel.getRootPathHome()? "#ff00ffff" : "#bde0ff"
+                                    radius: 5
+                                }
+                                /* самое интересное в данном объекте
                          * задаём свойству text переменную, по имени которой будем задавать
                          * свойства элемента
                          * */
 
-                                    // По клику по кнопке отдаём в текстовое поле индекс элемента в ListView
-                                    onClicked: {
-                                        textIndex.text = index
-                                    }
-                                    Text {
-                                        anchors.centerIn: parent
-                                        renderType: Text.NativeRendering
-                                        text: idshnik
-                                    }
+                                // По клику по кнопке отдаём в текстовое поле индекс элемента в ListView
+                                onClicked: {
+                                    textIndex.text = index
+                                    filesModel.setRootPath(filesModel.getbyIdFromRoots(index))
+                                    filesModel.getFolderList(filesModel.getbyIdFromRoots(index),filesModel.getADirList())
+                                }
+                                Text {
+                                    anchors.centerIn: parent
+                                    renderType: Text.NativeRendering
+                                    text: idshnik
                                 }
                             }
-                            // Сама модель, в которой будут содержаться все элементы
-                            model: ListModel {
-                                id: listModel // задаём ей id для обращения
-                            }
                         }
-
+                        // Сама модель, в которой будут содержаться все элементы
+                        model: ListModel {
+                            id: listModel // задаём ей id для обращения
+                        }
                     }
+
                 }
+            }
+        }
+
+        Button{
+            id: buttonHome
+            text: "home"
+            background: Rectangle {
+                id: homebg
+                implicitWidth: 40
+                implicitHeight: 40
+                color:filesModel.getRootPath() === filesModel.getRootPathHome()? "#ff00ffff" : "#bde0ff"
+                radius: 5
+            }
+            onClicked: {
+                filesModel.setRootPath(filesModel.getRootPathHome())
+                filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
+                filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
+                filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
+                filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
+            }
+        }
+        Button{
+            id: buttonUsb1
+            text: "usb1"
+            visible: filesModel.getVisibleButtonUSB1() === 1? true :false
+            background: Rectangle {
+                id: usb1bg
+                implicitWidth: 40
+                implicitHeight: 40
+                color:filesModel.getRootPath() === filesModel.getRootPathUSB1()? "#ff00ffff" : "#bde0ff"
+                radius: 5
             }
 
-            Button{
-                id: buttonHome
-                text: "home"
-                background: Rectangle {
-                    id: homebg
-                    implicitWidth: 40
-                    implicitHeight: 40
-                    color:filesModel.getRootPath() === filesModel.getRootPathHome()? "#ff00ffff" : "#bde0ff"
-                    radius: 5
-                }
-                onClicked: {
-                    filesModel.setRootPath(filesModel.getRootPathHome())
-                    filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
-                    filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
-                    filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
-                    filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
-                }
+            onClicked: {
+                filesModel.setRootPath(filesModel.getRootPathUSB1())
+                filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
+                filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
+                filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
+                filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
             }
-            Button{
-                id: buttonUsb1
-                text: "usb1"
-                visible: filesModel.getVisibleButtonUSB1() === 1? true :false
-                background: Rectangle {
-                    id: usb1bg
-                    implicitWidth: 40
-                    implicitHeight: 40
-                    color:filesModel.getRootPath() === filesModel.getRootPathUSB1()? "#ff00ffff" : "#bde0ff"
-                    radius: 5
-                }
 
-                onClicked: {
-                    filesModel.setRootPath(filesModel.getRootPathUSB1())
-                    filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
-                    filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
-                    filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
-                    filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
-                }
-
+        }
+        Button{
+            id: buttonUsb2
+            text: "usb2"
+            visible: filesModel.getVisibleButtonUSB2() === 1? true :false
+            background: Rectangle {
+                id: usb2bg
+                implicitWidth: 40
+                implicitHeight: 40
+                color:filesModel.getRootPath() === filesModel.getRootPathUSB2()? "#ff00ffff" : "#bde0ff"
+                radius: 5
             }
-            Button{
-                id: buttonUsb2
-                text: "usb2"
-                visible: filesModel.getVisibleButtonUSB2() === 1? true :false
-                background: Rectangle {
-                    id: usb2bg
-                    implicitWidth: 40
-                    implicitHeight: 40
-                    color:filesModel.getRootPath() === filesModel.getRootPathUSB2()? "#ff00ffff" : "#bde0ff"
-                    radius: 5
-                }
-                onClicked: {
-                    filesModel.setRootPath(filesModel.getRootPathUSB2())
-                    filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
-                    filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
-                    filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
-                    filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
-                }
+            onClicked: {
+                filesModel.setRootPath(filesModel.getRootPathUSB2())
+                filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
+                filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
+                filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
+                filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
             }
-            Label{
-                id: labelCurrMarked
-                text:filesModel.getCurrMarked()
-            }
+        }
+        Label{
+            id: labelCurrMarked
+            text:filesModel.getCurrMarked()
+        }
 
     }
 }
