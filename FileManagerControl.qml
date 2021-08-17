@@ -145,7 +145,7 @@ ColumnLayout {
             }
             onClicked: {
                 filesModel.setRootPath(filesModel.getRootPathHome())
-                filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
+                filesModel.getFolderList(filesModel.getRootPath())
                 filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
                 filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
                 filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
@@ -165,7 +165,7 @@ ColumnLayout {
 
             onClicked: {
                 filesModel.setRootPath(filesModel.getRootPathUSB1())
-                filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
+                filesModel.getFolderList(filesModel.getRootPath())
                 filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
                 filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
                 filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
@@ -185,7 +185,7 @@ ColumnLayout {
             }
             onClicked: {
                 filesModel.setRootPath(filesModel.getRootPathUSB2())
-                filesModel.getFolderList(filesModel.getRootPath(),filesModel.getADirList())
+                filesModel.getFolderList(filesModel.getRootPath())
                 filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
                 filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
                 filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"

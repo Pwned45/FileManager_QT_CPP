@@ -7,6 +7,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QStorageInfo>
+#include <QDate>
 #include "filemanagerbutton.h"
 
 class FileManagerModel : public QAbstractListModel
@@ -24,6 +25,7 @@ public:
     int rowCount(const QModelIndex &) const;
     QVariant data(const QModelIndex &index, int role) const;
     Q_INVOKABLE void getFolderList(QString folderPath, QFileInfoList *dirList);
+    Q_INVOKABLE void getFolderList(QString folderPath);
     Q_INVOKABLE QString getRootPath();
     Q_INVOKABLE void setRootPath(QString rootPath);
     Q_INVOKABLE void switchDir(int index);

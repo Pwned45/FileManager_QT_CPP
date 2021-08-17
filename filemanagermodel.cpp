@@ -37,6 +37,34 @@ void FileManagerModel::getFolderList(QString folderPath, QFileInfoList *dirList)
         }
     }
 }
+void FileManagerModel::getFolderList(QString folderPath)
+{
+    QDir dir = QDir(folderPath);
+    QFileInfoList *dirList = getADirList();
+
+
+    if (folderPath == m_rootPath || (m_rootPath +"/")==folderPath) //some root path
+    {
+        *dirList = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
+        this->beginResetModel();
+        this->m_DirList = dirList;
+        this->m_enterDirCurrMarked = folderPath;
+        this->m_currMarked = folderPath;
+        emit sendCurrMarkedToQML(m_currMarked);
+        this->endResetModel();
+
+    } else{
+        if (folderPath > m_rootPath) {
+        *dirList = dir.entryInfoList(QDir::NoDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
+        this->beginResetModel();
+        this->m_DirList = dirList;
+        this->m_enterDirCurrMarked = folderPath;
+        this->m_currMarked = folderPath;
+        emit sendCurrMarkedToQML(m_currMarked);
+        this->endResetModel();
+        }
+    }
+}
 
 QString FileManagerModel::getRootPath()
 {
