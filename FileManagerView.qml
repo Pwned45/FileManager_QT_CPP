@@ -12,7 +12,6 @@ ListView {
     currentIndex: -1
 
     model: filesModel
-
     spacing: 3
 
 /*

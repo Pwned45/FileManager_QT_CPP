@@ -15,53 +15,71 @@ ColumnLayout {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        // Задаём размещение поля с индексом кнопки
-        Rectangle {
-            // Устанавливаем текстовое поле для размещения индекса кнопки
-            Text {
-                id: textIndex
-                text: ""
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                visible: false;
-            }
-        }
-        // Кнопка для создания динамических кнопок
-        Button {
-            property int number: 0
-
-            id: button1
-            text: qsTr("Создать закладку")
-
-            /* По клику по кнопке добавляем в model ListView
-                     * объект, с заданными параметрами
-                     * */
-            onClicked: {
-                listModel.append({idshnik: "Закладка " + (++number)})
-                filesModel.addToRoots(filesModel.getCurrMarked())
-
-            }
-        }
-
-        // Кнопка для удаления динамических кнопок
-        Button {
-            id: button2
-            text: qsTr("Удалить закладку")
-            width: 50
-            height: 50
-
-            // Удаляем кнопку по её индексу в ListView
-            onClicked: {
-                if(textIndex.text != ""){
-                    listModel.remove(textIndex.text)
-                    filesModel.removeFromRoots(textIndex.text)
-                    textIndex.text = "" // Обнуляем текстовое поле с индексом
-                }
-            }
-        }
-
 
         // ListView для представления данных в виде списка
+//        ListView {
+//            id: listView1
+//            // Размещаем его в оставшейся части окна приложения
+//            anchors.top: row.bottom
+//            anchors.bottom: parent.bottom
+//            anchors.left: parent.left
+//            anchors.right: parent.right
+//            spacing: 3
+//            /* в данном свойстве задаём вёрстку одного объекта
+//                 * который будем отображать в списке в качестве одного элемента списка
+//                 * */
+//            Flickable {
+//                anchors.fill: parent
+//                contentWidth: row.width
+//                Row {
+//                    id: row
+
+//                    height: parent.height
+
+//                    Repeater {
+
+//                        delegate: Rectangle {
+//                            id: theDelegate
+//                            height: 45
+//                            width: 45
+//                            radius: 5
+//                            // В данном элементе будет находиться одна кнопка
+//                            Button {
+//                                anchors.margins: 3
+//                                anchors.fill: parent
+//                                background: Rectangle {
+//                                    implicitWidth: 40
+//                                    implicitHeight: 40
+//                                    color:filesModel.getRootPath() === filesModel.getRootPathHome()? "#ff00ffff" : "#bde0ff"
+//                                    radius: 5
+//                                }
+//                                /* самое интересное в данном объекте
+//                         * задаём свойству text переменную, по имени которой будем задавать
+//                         * свойства элемента
+//                         * */
+
+//                                // По клику по кнопке отдаём в текстовое поле индекс элемента в ListView
+//                                onClicked: {
+//                                    textIndex.text = index
+//                                    filesModel.setRootPath(filesModel.getbyIdFromRoots(index))
+//                                    filesModel.getFolderList(filesModel.getbyIdFromRoots(index),filesModel.getADirList())
+//                                }
+//                                Text {
+//                                    anchors.centerIn: parent
+//                                    renderType: Text.NativeRendering
+//                                    text: idshnik
+//                                }
+//                            }
+//                        }
+//                        // Сама модель, в которой будут содержаться все элементы
+//                        model: ListModel {
+//                            id: listModel // задаём ей id для обращения
+//                        }
+//                    }
+
+//                }
+//            }
+//        }
         ListView {
             id: listView1
             // Размещаем его в оставшейся части окна приложения
@@ -70,6 +88,7 @@ ColumnLayout {
             anchors.left: parent.left
             anchors.right: parent.right
             spacing: 3
+            model:controlmodel
             /* в данном свойстве задаём вёрстку одного объекта
                  * который будем отображать в списке в качестве одного элемента списка
                  * */
@@ -98,27 +117,15 @@ ColumnLayout {
                                     color:filesModel.getRootPath() === filesModel.getRootPathHome()? "#ff00ffff" : "#bde0ff"
                                     radius: 5
                                 }
-                                /* самое интересное в данном объекте
-                         * задаём свойству text переменную, по имени которой будем задавать
-                         * свойства элемента
-                         * */
-
-                                // По клику по кнопке отдаём в текстовое поле индекс элемента в ListView
                                 onClicked: {
                                     textIndex.text = index
-                                    filesModel.setRootPath(filesModel.getbyIdFromRoots(index))
-                                    filesModel.getFolderList(filesModel.getbyIdFromRoots(index),filesModel.getADirList())
                                 }
                                 Text {
                                     anchors.centerIn: parent
                                     renderType: Text.NativeRendering
-                                    text: idshnik
+                                    text: model.name
                                 }
                             }
-                        }
-                        // Сама модель, в которой будут содержаться все элементы
-                        model: ListModel {
-                            id: listModel // задаём ей id для обращения
                         }
                     }
 

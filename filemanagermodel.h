@@ -96,7 +96,6 @@ private:
     int m_visibleButtonUSB2;
 
     QString fileSize (qint64 nSize) const;
-    qint64 listFolder ( QString path ) const;
 
 
     // QAbstractItemModel interface

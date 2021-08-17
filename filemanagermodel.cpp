@@ -157,7 +157,6 @@ const QString FileManagerModel::getCurrMarkedInfo() const
     if (QFile(m_currMarked).exists()){
         if(QFileInfo(m_currMarked).isDir()){
             str += QFileInfo(m_currMarked).lastModified().toString()
-                    +" "+ fileSize(listFolder(m_currMarked))
                     +" "+ fileSize(QStorageInfo(m_rootPath).bytesAvailable())
                     +"/"+ fileSize(QStorageInfo(m_rootPath).bytesTotal());
             return str;
@@ -182,28 +181,6 @@ QString FileManagerModel::fileSize(qint64 nSize) const
         }
     }
     return QString().setNum(nSize) + "BKMGT"[i];
-}
-qint64 FileManagerModel::listFolder (QString path) const {
-    QDir currentFolder(path);
-
-    qint64 totalsize = 0;
-
-    currentFolder.setFilter( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
-    currentFolder.setSorting( QDir::Name );
-
-    QFileInfoList folderitems( currentFolder.entryInfoList() );
-
-    foreach ( QFileInfo i, folderitems ) {
-        QString iname( i.fileName() );
-        if ( iname == "." || iname == ".." || iname.isEmpty() )
-            continue;
-
-        if ( i.isDir() )
-            totalsize += listFolder( path+"/"+iname );
-        else
-            totalsize += i.size();
-    }
-    return totalsize;
 }
 
 void FileManagerModel::setCurrMarked(QString newCurrMarked)

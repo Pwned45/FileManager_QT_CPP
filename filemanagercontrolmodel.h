@@ -23,11 +23,16 @@ public:
     Q_INVOKABLE const QList<FileManagerButton *> getButtons() const;
     void setButtons(const QList<FileManagerButton *> newButtons);
 
+    Q_INVOKABLE void addToButtons(QString path,QString name, int stage);
+
+    QHash<int, QByteArray> roleNames() const;
+
 signals:
     void buttonsChanged();
 
 private:
     QList<FileManagerButton*> m_buttons;
+
 
 };
 

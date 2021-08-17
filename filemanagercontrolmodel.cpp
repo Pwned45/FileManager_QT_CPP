@@ -55,3 +55,19 @@ void FileManagerControlModel::setButtons(const QList<FileManagerButton *> newBut
     emit buttonsChanged();
 }
 
+void FileManagerControlModel::addToButtons(QString path, QString name, int stage)
+{
+    this->m_buttons.append(new FileManagerButton(path,name,stage,false));
+}
+
+QHash<int, QByteArray> FileManagerControlModel::roleNames() const
+{
+    QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
+    roles[FileManagerControlModelName] = "name";
+    roles[FileManagerControlModelPath] = "path";
+    roles[FileManagerControlModelMarked] = "marked";
+    roles[FileManagerControlModelStage] = "stage";
+    return roles;
+}
+
+
