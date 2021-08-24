@@ -74,13 +74,13 @@ int main(int argc, char ** argv)
 {
     QGuiApplication app(argc, argv);
 
-    QString rootHome = "/home";
+    QString rootHome = "/home/daniil";
     QString rootUsb1 = "/home/daniil";
     QString rootUsb2 = "/home/daniil/qtprojects";
 
     QList<FileManagerButton*> list = {
-        new FileManagerButton("F:/Android studio","1"),
-        new FileManagerButton("G:/enterprise","2")};
+        new FileManagerButton("/home/daniil","1"),
+        new FileManagerButton("/home/daniil/qtprojects","2")};
     FileManagerControlModel * controlModel= new FileManagerControlModel();
     controlModel->setButtons(list);
 

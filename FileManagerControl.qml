@@ -16,27 +16,20 @@ ColumnLayout {
         anchors.left: parent.left
         anchors.right: parent.right
 
-
-        // ListView для представления данных в виде списка
 //        ListView {
 //            id: listView1
-//            // Размещаем его в оставшейся части окна приложения
 //            anchors.top: row.bottom
 //            anchors.bottom: parent.bottom
 //            anchors.left: parent.left
 //            anchors.right: parent.right
 //            spacing: 3
-//            /* в данном свойстве задаём вёрстку одного объекта
-//                 * который будем отображать в списке в качестве одного элемента списка
-//                 * */
+//            model:controlModel
 //            Flickable {
 //                anchors.fill: parent
 //                contentWidth: row.width
 //                Row {
 //                    id: row
-
 //                    height: parent.height
-
 //                    Repeater {
 
 //                        delegate: Rectangle {
@@ -54,148 +47,138 @@ ColumnLayout {
 //                                    color:filesModel.getRootPath() === filesModel.getRootPathHome()? "#ff00ffff" : "#bde0ff"
 //                                    radius: 5
 //                                }
-//                                /* самое интересное в данном объекте
-//                         * задаём свойству text переменную, по имени которой будем задавать
-//                         * свойства элемента
-//                         * */
-
-//                                // По клику по кнопке отдаём в текстовое поле индекс элемента в ListView
 //                                onClicked: {
 //                                    textIndex.text = index
-//                                    filesModel.setRootPath(filesModel.getbyIdFromRoots(index))
-//                                    filesModel.getFolderList(filesModel.getbyIdFromRoots(index),filesModel.getADirList())
 //                                }
 //                                Text {
 //                                    anchors.centerIn: parent
 //                                    renderType: Text.NativeRendering
-//                                    text: idshnik
+//                                    text: model.name
 //                                }
 //                            }
-//                        }
-//                        // Сама модель, в которой будут содержаться все элементы
-//                        model: ListModel {
-//                            id: listModel // задаём ей id для обращения
 //                        }
 //                    }
 
 //                }
 //            }
 //        }
+
+//        Button{
+//            id: buttonHome
+//            text: "home"
+//            background: Rectangle {
+//                id: homebg
+//                implicitWidth: 40
+//                implicitHeight: 40
+//                color:filesModel.getRootPath() === filesModel.getRootPathHome()? "#ff00ffff" : "#bde0ff"
+//                radius: 5
+//            }
+//            onClicked: {
+//                filesModel.setRootPath(filesModel.getRootPathHome())
+//                filesModel.getFolderList(filesModel.getRootPath())
+//                filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
+//                filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
+//                filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
+//            }
+//        }
+//        Button{
+//            id: buttonUsb1
+//            text: "usb1"
+//            visible: filesModel.getVisibleButtonUSB1() === 1? true :false
+//            background: Rectangle {
+//                id: usb1bg
+//                implicitWidth: 40
+//                implicitHeight: 40
+//                color:filesModel.getRootPath() === filesModel.getRootPathUSB1()? "#ff00ffff" : "#bde0ff"
+//                radius: 5
+//            }
+
+//            onClicked: {
+//                filesModel.setRootPath(filesModel.getRootPathUSB1())
+//                filesModel.getFolderList(filesModel.getRootPath())
+//                filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
+//                filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
+//                filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
+//            }
+
+//        }
+//        Button{
+//            id: buttonUsb2
+//            text: "usb2"
+//            visible: filesModel.getVisibleButtonUSB2() === 1? true :false
+//            background: Rectangle {
+//                id: usb2bg
+//                implicitWidth: 40
+//                implicitHeight: 40
+//                color:filesModel.getRootPath() === filesModel.getRootPathUSB2()? "#ff00ffff" : "#bde0ff"
+//                radius: 5
+//            }
+//            onClicked: {
+//                filesModel.setRootPath(filesModel.getRootPathUSB2())
+//                filesModel.getFolderList(filesModel.getRootPath())
+//                filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
+//                filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
+//                filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
+//            }
+//        }
         ListView {
-            id: listView1
-            // Размещаем его в оставшейся части окна приложения
-            anchors.top: row.bottom
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            anchors.right: parent.right
+            id: filesView
+            width: 400
+            height: 80
+            clip: true
+
+            currentIndex: -1
+
+            model: controlModel
             spacing: 3
-            model:controlmodel
-            /* в данном свойстве задаём вёрстку одного объекта
-                 * который будем отображать в списке в качестве одного элемента списка
-                 * */
-            Flickable {
-                anchors.fill: parent
-                contentWidth: row.width
-                Row {
-                    id: row
 
-                    height: parent.height
+            delegate: Rectangle {
+                height: 40
+                width: 40
 
-                    Repeater {
+                radius: 5
 
-                        delegate: Rectangle {
-                            id: theDelegate
-                            height: 45
-                            width: 45
-                            radius: 5
-                            // В данном элементе будет находиться одна кнопка
-                            Button {
-                                anchors.margins: 3
-                                anchors.fill: parent
-                                background: Rectangle {
-                                    implicitWidth: 40
-                                    implicitHeight: 40
-                                    color:filesModel.getRootPath() === filesModel.getRootPathHome()? "#ff00ffff" : "#bde0ff"
-                                    radius: 5
-                                }
-                                onClicked: {
-                                    textIndex.text = index
-                                }
-                                Text {
-                                    anchors.centerIn: parent
-                                    renderType: Text.NativeRendering
-                                    text: model.name
-                                }
-                            }
+                color: model.marked ?"#8000ffff":"transparent"
+
+                border {
+                    width: 2
+                    color: filesView.currentIndex == index?"#ff00ffff":"#20000000"
+                }
+
+                RowLayout {
+                    id: theDelegate
+
+                    Text {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+
+                        font {
+                            pixelSize: 22
                         }
-                    }
 
+                        elide: Text.ElideRight
+
+                        color: "red"
+
+                        text: model.name
+                    }
+                }
+
+                MouseArea {
+                    id: mousearea
+                    anchors.fill: parent
+
+                    onClicked: {
+                        filesModel.setRootPath(model.path)
+                        filesModel.getFolderList(filesModel.getRootPath())
+                        controlModel.switchMarkedOfIndex(index)
+                    }
                 }
             }
-        }
-
-        Button{
-            id: buttonHome
-            text: "home"
-            background: Rectangle {
-                id: homebg
-                implicitWidth: 40
-                implicitHeight: 40
-                color:filesModel.getRootPath() === filesModel.getRootPathHome()? "#ff00ffff" : "#bde0ff"
-                radius: 5
-            }
-            onClicked: {
-                filesModel.setRootPath(filesModel.getRootPathHome())
-                filesModel.getFolderList(filesModel.getRootPath())
-                filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
-                filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
-                filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
+            Label{
+                id: labelCurrMarked
+                text:filesModel.getCurrMarked()
             }
         }
-        Button{
-            id: buttonUsb1
-            text: "usb1"
-            visible: filesModel.getVisibleButtonUSB1() === 1? true :false
-            background: Rectangle {
-                id: usb1bg
-                implicitWidth: 40
-                implicitHeight: 40
-                color:filesModel.getRootPath() === filesModel.getRootPathUSB1()? "#ff00ffff" : "#bde0ff"
-                radius: 5
-            }
-
-            onClicked: {
-                filesModel.setRootPath(filesModel.getRootPathUSB1())
-                filesModel.getFolderList(filesModel.getRootPath())
-                filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
-                filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
-                filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
-            }
-
-        }
-        Button{
-            id: buttonUsb2
-            text: "usb2"
-            visible: filesModel.getVisibleButtonUSB2() === 1? true :false
-            background: Rectangle {
-                id: usb2bg
-                implicitWidth: 40
-                implicitHeight: 40
-                color:filesModel.getRootPath() === filesModel.getRootPathUSB2()? "#ff00ffff" : "#bde0ff"
-                radius: 5
-            }
-            onClicked: {
-                filesModel.setRootPath(filesModel.getRootPathUSB2())
-                filesModel.getFolderList(filesModel.getRootPath())
-                filesModel.getRootPath() === filesModel.getRootPathHome()? homebg.color="#ff00ffff" : homebg.color="#bde0ff"
-                filesModel.getRootPath() === filesModel.getRootPathUSB1()? usb1bg.color="#ff00ffff" : usb1bg.color="#bde0ff"
-                filesModel.getRootPath() === filesModel.getRootPathUSB2()? usb2bg.color="#ff00ffff" : usb2bg.color="#bde0ff"
-            }
-        }
-        Label{
-            id: labelCurrMarked
-            text:filesModel.getCurrMarked()
-        }
-
     }
 }
