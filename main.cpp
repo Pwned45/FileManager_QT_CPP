@@ -74,7 +74,7 @@ int main(int argc, char ** argv)
 {
     QGuiApplication app(argc, argv);
 
-    QString rootHome = "/home";
+    QString rootHome = "C:/Users/Daniil/Pictures";
     QString rootUsb1 = "/home/daniil";
     QString rootUsb2 = "/home/daniil/qtprojects";
 

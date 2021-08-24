@@ -25,7 +25,7 @@ QVariant FileManagerControlModel::data(const QModelIndex &index, int role) const
                 break;
                 case FileManagerControlModelRoles::FileManagerControlModelPath: //string
                 {
-                    value = this->m_buttons.at(index.row())->getName();
+                    value = this->m_buttons.at(index.row())->getPath();
                 }
                 break;
                 case FileManagerControlModelRoles::FileManagerControlModelStage: //int
@@ -58,6 +58,21 @@ void FileManagerControlModel::setButtons(const QList<FileManagerButton *> newBut
 void FileManagerControlModel::addToButtons(QString path, QString name, int stage)
 {
     this->m_buttons.append(new FileManagerButton(path,name,stage,false));
+}
+
+void FileManagerControlModel::switchMarkedOfIndex(int index)
+{
+    QList<FileManagerButton*> buttons = m_buttons;
+    for (int i = 0 ; i<buttons.size();i++){
+        if (buttons.at(i)->getMarked() && i!= index){
+            buttons.at(i)->setMarked(false);
+        }
+    }
+    buttons.at(index)->getMarked() ?
+                buttons.at(index)->setMarked(false) : buttons.at(index)->setMarked(true);
+    this->beginResetModel();
+    this->m_buttons = buttons;
+    this->endResetModel();
 }
 
 QHash<int, QByteArray> FileManagerControlModel::roleNames() const

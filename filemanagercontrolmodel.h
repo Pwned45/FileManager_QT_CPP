@@ -25,6 +25,8 @@ public:
 
     Q_INVOKABLE void addToButtons(QString path,QString name, int stage);
 
+    Q_INVOKABLE void switchMarkedOfIndex(int index);
+
     QHash<int, QByteArray> roleNames() const;
 
 signals:
