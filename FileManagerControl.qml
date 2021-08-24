@@ -8,6 +8,7 @@ ColumnLayout {
             target: filesModel
             function onSendCurrMarkedToQML(currmarked){
                 labelCurrMarked.text = currmarked
+                console.log("Got change")
             }
         }
         height: 50

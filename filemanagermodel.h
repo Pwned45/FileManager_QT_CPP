@@ -77,7 +77,7 @@ public:
 signals:
     void aDirListChanged();
     void sendCurrMarkedToQML(QString currmarked);
-    void sendCurrMarkedInfoToQML(QString currmarked);
+    void sendCurrMarkedInfoToQML(QString currmarkedinfo);
     void changeRootPath();
 
 public slots:
