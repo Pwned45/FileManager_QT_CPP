@@ -77,13 +77,14 @@ int main(int argc, char ** argv)
     QString rootHome = "C:/Users/Daniil/Pictures";
 
     QList<FileManagerButton*> list = {
-        new FileManagerButton("F:/Android studio","1"),
-        new FileManagerButton("G:/enterprise","2"),
-    new FileManagerButton("G:/enterprise","3"),
-    new FileManagerButton("G:/enterprise","4"),
-    new FileManagerButton("G:/enterprise","5"),
-    new FileManagerButton("G:/enterprise","6"),
-    new FileManagerButton("G:/enterprise","7")};
+        new FileManagerButton("/home/daniil","1"),
+        new FileManagerButton("/home/daniil/qtprojects","2"),
+    new FileManagerButton("/home/daniil/qtprojects","3"),
+    new FileManagerButton("/home/daniil/qtprojects","4"),
+    new FileManagerButton("/home/daniil/qtprojects","5"),
+    new FileManagerButton("/home/daniil/qtprojects","6"),
+    new FileManagerButton("/home/daniil/qtprojects","7")};
+
     FileManagerControlModel * controlModel= new FileManagerControlModel();
     controlModel->setButtons(list);
 

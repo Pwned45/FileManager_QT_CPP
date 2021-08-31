@@ -7,7 +7,7 @@ ColumnLayout {
             target: filesModel
             function onSendCurrMarkedToQML(currmarked){
                 labelCurrMarked.text = currmarked
-                console.log("got change")
+                console.log("Got change")
             }
         }
         anchors.fill : parent

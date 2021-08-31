@@ -6,8 +6,8 @@ ColumnLayout {
     RowLayout{
         Connections{
             target: filesModel
-            function onSendCurrMarkedInfoToQML(currmarked){
-                labelCurrMarked.text = currmarked
+            function onSendCurrMarkedInfoToQML(currmarkedinfo){
+                labelCurrMarked.text = currmarkedinfo
             }
         }
         Label{
