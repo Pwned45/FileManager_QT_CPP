@@ -29,6 +29,7 @@ public:
 
     QHash<int, QByteArray> roleNames() const;
 
+
 signals:
     void buttonsChanged();
 

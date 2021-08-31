@@ -68,8 +68,9 @@ void FileManagerControlModel::switchMarkedOfIndex(int index)
             buttons.at(i)->setMarked(false);
         }
     }
-    buttons.at(index)->getMarked() ?
-                buttons.at(index)->setMarked(false) : buttons.at(index)->setMarked(true);
+    if(!buttons.at(index)->getMarked()){
+        buttons.at(index)->setMarked(true);
+    }
     this->beginResetModel();
     this->m_buttons = buttons;
     this->endResetModel();
