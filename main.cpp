@@ -74,7 +74,7 @@ int main(int argc, char ** argv)
 {
     QGuiApplication app(argc, argv);
 
-    QString rootHome = "C:/Users/Daniil/Pictures";
+    QString rootHome = "/home/daniil";
 
     QList<FileManagerButton*> list = {
         new FileManagerButton("/home/daniil","1"),
