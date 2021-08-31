@@ -75,12 +75,15 @@ int main(int argc, char ** argv)
     QGuiApplication app(argc, argv);
 
     QString rootHome = "C:/Users/Daniil/Pictures";
-    QString rootUsb1 = "/home/daniil";
-    QString rootUsb2 = "/home/daniil/qtprojects";
 
     QList<FileManagerButton*> list = {
         new FileManagerButton("F:/Android studio","1"),
-        new FileManagerButton("G:/enterprise","2")};
+        new FileManagerButton("G:/enterprise","2"),
+    new FileManagerButton("G:/enterprise","3"),
+    new FileManagerButton("G:/enterprise","4"),
+    new FileManagerButton("G:/enterprise","5"),
+    new FileManagerButton("G:/enterprise","6"),
+    new FileManagerButton("G:/enterprise","7")};
     FileManagerControlModel * controlModel= new FileManagerControlModel();
     controlModel->setButtons(list);
 
@@ -91,11 +94,6 @@ int main(int argc, char ** argv)
 
     filesModel->getFolderList(rootHome,aDirList);
     filesModel->setRootPath(rootHome);
-    filesModel->setRootPathHome(rootHome);
-    filesModel->setRootPathUSB1(rootUsb1);
-    filesModel->setRootPathUSB2(rootUsb2);
-    filesModel->setVisibleButtonUSB1(1);
-    filesModel->setVisibleButtonUSB2(1);
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("filesModel", filesModel);
     engine.rootContext()->setContextProperty("controlModel", controlModel);
