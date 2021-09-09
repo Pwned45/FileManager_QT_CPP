@@ -74,12 +74,12 @@ int main(int argc, char ** argv)
 {
     QGuiApplication app(argc, argv);
 
-    QString rootHome = "/home/daniil";
+    QString rootHome = "C:/";
 
     QList<FileManagerButton*> list = {
-        new FileManagerButton("/home/daniil","1"),
-        new FileManagerButton("/home/daniil/qtprojects","2"),
-    new FileManagerButton("/home/daniil/qtprojects","3"),
+        new FileManagerButton("C:/","1",2, true),
+        new FileManagerButton("F:/","2"),
+    new FileManagerButton("G:/","3"),
     new FileManagerButton("/home/daniil/qtprojects","4"),
     new FileManagerButton("/home/daniil/qtprojects","5"),
     new FileManagerButton("/home/daniil/qtprojects","6"),

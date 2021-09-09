@@ -7,7 +7,7 @@ ColumnLayout {
             target: filesModel
             function onSendCurrMarkedToQML(currmarked){
                 labelCurrMarked.text = currmarked
-                console.log("Got change")
+                //console.log("Got change")
             }
         }
         anchors.fill : parent
@@ -59,9 +59,17 @@ ColumnLayout {
                     anchors.fill: parent
 
                     onClicked: {
-                        filesModel.setRootPath(model.path)
-                        filesModel.getFolderList(filesModel.getRootPath())
-                        controlModel.switchMarkedOfIndex(index)
+                        if (filesModel.checkForEmptyRoot(model.path)) {
+                            filesModel.setRootPath(controlModel.getRootPathFirstButton())
+                            filesModel.getFolderList(filesModel.getRootPath())
+                            controlModel.removeFromButtonsByIndex(index)
+                            controlModel.switchMarkedOfIndex(0)
+
+                        } else {
+                            filesModel.setRootPath(model.path)
+                            filesModel.getFolderList(filesModel.getRootPath())
+                            controlModel.switchMarkedOfIndex(index)
+                        }
                     }
                 }
             }

@@ -42,7 +42,6 @@ void FileManagerModel::getFolderList(QString folderPath)
     QDir dir = QDir(folderPath);
     QFileInfoList *dirList = getADirList();
 
-
     if (folderPath == m_rootPath || (m_rootPath +"/")==folderPath) //some root path
     {
         *dirList = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
@@ -51,7 +50,7 @@ void FileManagerModel::getFolderList(QString folderPath)
         this->m_enterDirCurrMarked = folderPath;
         this->m_currMarked = folderPath;
         emit sendCurrMarkedToQML(m_currMarked);
-        this->endResetModel();
+        this->endResetModel();        
 
     } else{
         if (folderPath > m_rootPath) {
@@ -223,6 +222,18 @@ void FileManagerModel::setCurrMarked(int index)
     m_currMarked = this->m_DirList->at(index).absoluteFilePath();
     emit sendCurrMarkedToQML(m_currMarked);
     emit sendCurrMarkedInfoToQML(getCurrMarkedInfo());
+}
+
+bool FileManagerModel::checkForEmptyRoot(QString path)
+{
+    QDir dir = QDir(path);
+    QFileInfoList *dirList = getADirList();
+    *dirList = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::DirsFirst);
+    if (dirList->size()==0){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 const QString FileManagerModel::getEnterDirCurrMarked() const

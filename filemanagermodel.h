@@ -44,6 +44,8 @@ public:
     Q_INVOKABLE void setCurrMarked( QString newCurrMarket);
     Q_INVOKABLE void setCurrMarked(int index);
 
+    Q_INVOKABLE bool checkForEmptyRoot(QString path);
+
     Q_INVOKABLE const QString getEnterDirCurrMarked() const;
     void setEnterDirCurrMarked( QString newEnterDirCurrMarked);
 
@@ -52,6 +54,7 @@ signals:
     void sendCurrMarkedToQML(QString currmarked);
     void sendCurrMarkedInfoToQML(QString currmarkedinfo);
     void changeRootPath();
+    void errorPathOpened();
 
 public slots:
 

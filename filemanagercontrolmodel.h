@@ -27,6 +27,10 @@ public:
 
     Q_INVOKABLE void switchMarkedOfIndex(int index);
 
+    Q_INVOKABLE void removeFromButtonsByIndex(int index);
+
+    Q_INVOKABLE QString getRootPathFirstButton();
+
     QHash<int, QByteArray> roleNames() const;
 
 

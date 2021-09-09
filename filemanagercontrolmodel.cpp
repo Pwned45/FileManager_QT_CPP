@@ -76,6 +76,21 @@ void FileManagerControlModel::switchMarkedOfIndex(int index)
     this->endResetModel();
 }
 
+void FileManagerControlModel::removeFromButtonsByIndex(int index)
+{
+    if (m_buttons.at(index)->getStage()!=2){
+    this->beginResetModel();
+    m_buttons.removeAt(index);
+    this->endResetModel();
+    }
+}
+
+QString FileManagerControlModel::getRootPathFirstButton()
+{
+    return m_buttons.at(0)->getPath();
+}
+
+
 QHash<int, QByteArray> FileManagerControlModel::roleNames() const
 {
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
